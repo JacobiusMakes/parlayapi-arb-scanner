@@ -89,3 +89,7 @@ An honest note: real arbitrage is rare, margins are usually under 1-2%, windows 
 Built by the ParlayAPI team. ParlayAPI is a drop-in replacement for the-odds-api with a free tier, a [Python SDK](https://pypi.org/project/parlay-api/) (`pip install parlay-api`), an [MCP server](https://pypi.org/project/parlayapi-mcp/) for AI agents, and [full docs](https://parlay-api.com/docs).
 
 MIT licensed. See [LICENSE](LICENSE).
+
+---
+
+Part of the [ParlayAPI](https://parlay-api.com) ecosystem: a real-time sports odds API with a free tier of 1,000 credits per month, no card required. Explore all the tools at [github.com/JacobiusMakes](https://github.com/JacobiusMakes).
