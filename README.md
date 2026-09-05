@@ -2,7 +2,7 @@
 
 A small Python CLI that finds sportsbook arbitrage using the [ParlayAPI](https://parlay-api.com) odds API.
 
-Zero setup by default: it runs against ParlayAPI's keyless sandbox endpoints, so the quickstart below works with no account, no API key, and no config. Set one environment variable to point it at live odds from 45+ sportsbooks and sources.
+Zero setup by default: it runs against ParlayAPI's keyless sandbox endpoints, so the quickstart below works with no account, no API key, and no config. Set one environment variable to point it at live odds from 30+ sportsbooks and sources.
 
 ## 30-second quickstart
 
@@ -56,7 +56,7 @@ Grab a free API key (1,000 credits/month, no card required) at [parlay-api.com](
 PARLAY_API_KEY=pk_your_key uv run arb_scanner.py
 ```
 
-That switches every request from the sandbox to the live `/v1` endpoints: 45+ sportsbooks and sources, 90+ sports, sub-5-second freshness on major markets. Paid tiers and limits are on the [pricing page](https://parlay-api.com/pricing).
+That switches every request from the sandbox to the live `/v1` endpoints: 30+ sportsbooks and sources, 90+ sports, sub-5-second freshness on major markets. Paid tiers and limits are on the [pricing page](https://parlay-api.com/pricing).
 
 ## How the arb math works
 
