@@ -1,10 +1,15 @@
 # parlayapi-arb-scanner
 
-A small Python CLI that finds sportsbook arbitrage using the [ParlayAPI](https://parlay-api.com) odds API.
+A Python CLI example that displays arbitrage candidates from ParlayAPI responses
+or calculates them from returned odds. A displayed candidate does not establish
+complete compatible outcomes, current source prices or an executable profit.
 
-Zero setup by default: it runs against ParlayAPI's keyless sandbox endpoints, so the quickstart below works with no account, no API key, and no config. Set one environment variable to point it at live odds from 30+ sportsbooks and sources.
+The code selects a sandbox request path when no key is configured and account
+requests when `PARLAY_API_KEY` is set. Check current endpoint access and exact
+scope before a private evaluation; the retained example output below is not a
+current availability check.
 
-## 30-second quickstart
+## Existing command-line quickstart
 
 Requires [uv](https://docs.astral.sh/uv/). Dependencies resolve automatically on first run.
 
@@ -14,7 +19,7 @@ cd parlayapi-arb-scanner
 uv run arb_scanner.py
 ```
 
-Real captured sandbox run:
+Retained sandbox transcript with invented data, not current source observations:
 
 ```text
 SANDBOX mode: https://parlay-api.com/v1/sandbox (synthetic data, no key needed). Set PARLAY_API_KEY for live
@@ -48,19 +53,26 @@ uv run arb_scanner.py --min-profit 1.5 --bankroll 500  # filter, and size stakes
 uv run arb_scanner.py --json                           # machine-readable output
 ```
 
-## Going live
+## Plan a private evaluation
 
-Grab a free API key (1,000 credits/month, no card required) at [parlay-api.com](https://parlay-api.com), then:
+Use the free [workload planner](https://parlay-api.com/tools/api-workload?utm_source=github&utm_medium=tool_readme&utm_campaign=arb-scanner)
+to record your polling interval, active window, separately requested sports,
+endpoints, pages and active days. It needs no account or key and makes no API
+requests. Keep credit cost unknown until the exact unit cost is verified.
+
+## Account requests
+
+Create your own [account](https://parlay-api.com/signup?utm_source=github&utm_medium=tool_readme&utm_campaign=arb-scanner), keep its key private, then choose your request:
 
 ```bash
 PARLAY_API_KEY=pk_your_key uv run arb_scanner.py
 ```
 
-That switches every request from the sandbox to the live `/v1` endpoints: 30+ sportsbooks and sources, 90+ sports, sub-5-second freshness on major markets. Paid tiers and limits are on the [pricing page](https://parlay-api.com/pricing).
+This selects account `/v1` request paths. Your own entitlement and allowance apply. Verify exact returned records, timestamp semantics and request-cost rules in the current [documentation](https://parlay-api.com/docs) and [pricing](https://parlay-api.com/pricing).
 
 ## How the arb math works
 
-Decimal odds `d` imply a probability of `1/d`. For one market, take the best price on each outcome across all books and sum the implied probabilities. If the total is under 100%, backing every outcome locks in the gap:
+Decimal odds `d` imply a probability of `1/d`. For one market, take the best price on each outcome across all books and sum the implied probabilities. For a complete, compatible outcome set, the example uses the following equal-payout arithmetic. It assumes the entered numbers remain available and does not prove execution or profit:
 
 ```text
 inv    = 1/d_1 + 1/d_2 + ... + 1/d_n     (arb if inv < 1)
@@ -68,9 +80,10 @@ stake_i = bankroll * (1/d_i) / inv        (every outcome pays the same)
 profit  = bankroll * (1/inv - 1)
 ```
 
-Worked example: best prices of +105 (decimal 2.05) at one book and +100 (decimal 2.00) at another give `1/2.05 + 1/2.00 = 0.9878`. Staking $49.38 / $50.62 of a $100 bankroll returns about $101.23 whichever side wins, a 1.23% locked profit. The `--source odds` mode does exactly this computation on live ParlayAPI data.
-
-An honest note: real arbitrage is rare, margins are usually under 1-2%, windows close in minutes as books move their lines, and sportsbooks limit accounts that do this consistently. The sandbox data is synthetic and deliberately generous so the tool always has something to show. Nothing here is betting advice.
+This is arithmetic on the entered numbers. The `--source odds` mode applies it
+to returned records. Verify their exact event, market, settlement rules and
+complete outcome set separately. A calculated payout is not an executed wager
+or a verified market opportunity. The retained sandbox records are invented.
 
 ## Options
 
@@ -86,10 +99,12 @@ An honest note: real arbitrage is rare, margins are usually under 1-2%, windows 
 
 ## About
 
-Built by the ParlayAPI team. ParlayAPI is a drop-in replacement for the-odds-api with a free tier, a [Python SDK](https://pypi.org/project/parlay-api/) (`pip install parlay-api`), an [MCP server](https://pypi.org/project/parlayapi-mcp/) for AI agents, and [full docs](https://parlay-api.com/docs).
+Built by the ParlayAPI team. See the current [Python client source](https://github.com/JacobiusMakes/parlay-api-python), [MCP server source](https://github.com/JacobiusMakes/parlay-api-mcp) and [documentation](https://parlay-api.com/docs).
 
-MIT licensed. See [LICENSE](LICENSE).
+MIT-licensed code, see [LICENSE](LICENSE). Sharing the software does not grant
+permission to redistribute API data. Use your own account and applicable data-use
+permissions for a private project.
 
 ---
 
-Part of the [ParlayAPI](https://parlay-api.com) ecosystem: a real-time sports odds API with a free tier of 1,000 credits per month, no card required. Explore all the tools at [github.com/JacobiusMakes](https://github.com/JacobiusMakes).
+Explore related source projects at [github.com/JacobiusMakes](https://github.com/JacobiusMakes).
