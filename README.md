@@ -60,6 +60,11 @@ to record your polling interval, active window, separately requested sports,
 endpoints, pages and active days. It needs no account or key and makes no API
 requests. Keep credit cost unknown until the exact unit cost is verified.
 
+For several request shapes with different or unknown unit costs, use the
+[offline request-budget kit](https://github.com/JacobiusMakes/parlayapi-notebooks/tree/main/labs/request-budget).
+It includes a CSV template, exact JSON export and a self-contained notebook
+for Python 3.9 or later. Unpriced work keeps the total credit estimate unknown.
+
 ## Account requests
 
 Create your own [account](https://parlay-api.com/signup?utm_source=github&utm_medium=tool_readme&utm_campaign=arb-scanner), keep its key private, then choose your request:
